@@ -1,0 +1,61 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Address Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .ip-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .ip-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IP Address Tracker</h1>
+        <p>This page captures and displays the IP addresses of visitors.</p>
+        <h2>Recent Visitors</h2>
+        <ul class="ip-list" id="ipList">
+            <!-- IP addresses will be added here dynamically -->
+        </ul>
+    </div>
+
+    <script>
+        // Function to fetch IP address
+        function getIP(json) {
+            var ipAddress = json.ip;
+            addIPToList(ipAddress);
+        }
+
+        // Function to add IP address to list
+        function addIPToList(ip) {
+            var ipList = document.getElementById('ipList');
+            var listItem = document.createElement('li');
+            listItem.className = 'ip-item';
+            listItem.textContent = ip;
+            ipList.insertBefore(listItem, ipList.firstChild);
+        }
+
+        // Fetch IP address using JSONP
+        var script = document.createElement('script');
+        script.src = 'https://api.ipify.org?format=jsonp&callback=getIP';
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
